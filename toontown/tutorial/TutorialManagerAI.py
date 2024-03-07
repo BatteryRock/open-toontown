@@ -87,8 +87,8 @@ class TutorialManagerAI(DistributedObjectAI.DistributedObjectAI):
             av.b_setRewardHistory(0, [])
             av.b_setQuestCarryLimit(1)
             # Starting HP
-            av.b_setMaxHp(15)
-            av.b_setHp(15)
+            av.b_setMaxHp(69)
+            av.b_setHp(69)
             # No exp
             av.experience.zeroOutExp()
             av.d_setExperience(av.experience.makeNetString())
