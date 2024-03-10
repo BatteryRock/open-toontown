@@ -12,7 +12,7 @@ from . import QuestMapGlobals
 class QuestMap(DirectFrame):
 
     def __init__(self, av, **kw):
-        DirectFrame.__init__(self, relief=None, sortOrder=50)
+        super().__init__(relief=None, sortOrder=50)
         self.initialiseoptions(QuestMap)
         self.container = DirectFrame(parent=self, relief=None)
         self.marker = DirectFrame(parent=self.container, relief=None)
@@ -47,8 +47,6 @@ class QuestMap(DirectFrame):
             tracks = currHoodInfo[SuitPlannerBase.SuitPlannerBase.SUIT_HOOD_INFO_TRACK]
             self.suitPercentage[currHoodInfo[SuitPlannerBase.SuitPlannerBase.SUIT_HOOD_INFO_ZONE]] = tracks
 
-        return
-
     def load(self):
         gui = loader.loadModel('phase_4/models/questmap/questmap_gui')
         icon = gui.find('**/tt_t_gui_qst_arrow')
@@ -81,7 +79,6 @@ class QuestMap(DirectFrame):
         self.sInfo = DirectLabel(parent=self.cogInfoFrame, text_fg=cogInfoTextColor, text='', text_pos=textPos, text_scale=textScale, geom=sIcon, geom_pos=(-0.2, 0, 0), geom_scale=0.8, relief=None)
         self.sInfo.setPos(0.8, 0, -0.5)
         icons.removeNode()
-        return
 
     def updateCogInfo(self):
         currPercentage = self.suitPercentage.get(self.zoneId)
@@ -91,7 +88,6 @@ class QuestMap(DirectFrame):
         self.lInfo['text'] = '%s%%' % currPercentage[1]
         self.mInfo['text'] = '%s%%' % currPercentage[2]
         self.sInfo['text'] = '%s%%' % currPercentage[3]
-        return
 
     def destroy(self):
         self.ignore('questPageUpdated')
@@ -99,9 +95,9 @@ class QuestMap(DirectFrame):
         self.mapCloseButton.destroy()
         del self.mapOpenButton
         del self.mapCloseButton
-        DirectFrame.destroy(self)
+        super().destroy()
 
-    def putBuildingMarker(self, pos, hpr = (0, 0, 0), mapIndex = None):
+    def putBuildingMarker(self, pos, hpr=(0, 0, 0), mapIndex=None):
         marker = DirectLabel(parent=self.container, text='', text_pos=(-0.05, -0.15), text_fg=(1, 1, 1, 1), relief=None)
         gui = loader.loadModel('phase_4/models/parties/schtickerbookHostingGUI')
         icon = gui.find('**/startPartyButton_inactive')
@@ -120,12 +116,10 @@ class QuestMap(DirectFrame):
         self.buildingMarkers.append(marker)
         iconNP.removeNode()
         gui.removeNode()
-        return
 
     def updateQuestInfo(self):
         for marker in self.buildingMarkers:
             marker.destroy()
-
         self.buildingMarkers = []
         dnaStore = base.cr.playGame.dnaStore
         for questIndex in list(self.av.questPage.quests.keys()):
@@ -159,8 +153,6 @@ class QuestMap(DirectFrame):
                         if npcZone == finalZone:
                             self.putBuildingMarker(dnaStore.getDoorPosHprFromBlockNumber(blockNumber).getPos(), dnaStore.getDoorPosHprFromBlockNumber(blockNumber).getHpr(), mapIndex=mapIndex)
 
-        return
-
     def transformAvPos(self, pos):
         if self.cornerPosInfo is None:
             return (0, 0)
@@ -180,7 +172,6 @@ class QuestMap(DirectFrame):
         for buildingMarker in self.buildingMarkers:
             buildingMarker.setScale((math.sin(task.time * 16.0 + i * math.pi / 3.0) + 1) * 0.005 + 0.04)
             i = i + 1
-
         return Task.cont
 
     def updateMap(self):
