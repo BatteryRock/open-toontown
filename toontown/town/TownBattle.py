@@ -2,7 +2,6 @@ from toontown.toonbase.ToontownBattleGlobals import *
 import types
 from direct.fsm import StateData
 from direct.fsm import ClassicFSM, State
-from direct.fsm import State
 from . import TownBattleAttackPanel
 from . import TownBattleWaitPanel
 from . import TownBattleChooseAvatarPanel
@@ -130,10 +129,8 @@ class TownBattle(StateData.StateData):
          TownBattleToonPanel.TownBattleToonPanel(2),
          TownBattleToonPanel.TownBattleToonPanel(3))
         self.timer = ToontownTimer.ToontownTimer()
-        self.timer.setPos(1.182, 0, 0.842)
-        self.timer.setScale(0.4)
+        self.timer.posInTopRightCorner()
         self.timer.hide()
-        return
 
     def cleanup(self):
         self.ignore(self.attackPanelDoneEvent)

@@ -56,13 +56,11 @@ def showFriendsList():
     if globalFriendsList == None:
         globalFriendsList = FriendsListPanel()
     globalFriendsList.enter()
-    return
 
 
 def hideFriendsList():
     if globalFriendsList != None:
         globalFriendsList.exit()
-    return
 
 
 def showFriendsListTutorial():
@@ -74,7 +72,6 @@ def showFriendsListTutorial():
         globalFriendsList.secrets['state'] = DGG.DISABLED
     globalFriendsList.closeCommand = globalFriendsList.close['command']
     globalFriendsList.close['command'] = None
-    return
 
 
 def hideFriendsListTutorial():
@@ -84,7 +81,6 @@ def hideFriendsListTutorial():
         if not base.cr.isPaid():
             globalFriendsList.secrets['state'] = DGG.NORMAL
         globalFriendsList.exit()
-    return
 
 
 def isFriendsListShown():
@@ -98,7 +94,6 @@ def unloadFriendsList():
     if globalFriendsList != None:
         globalFriendsList.unload()
         globalFriendsList = None
-    return
 
 
 class FriendsListPanel(DirectFrame, StateData.StateData):
@@ -135,7 +130,6 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
         self.textDownColor = Vec4(0.5, 0.9, 1, 1)
         self.textDisabledColor = Vec4(0.4, 0.8, 0.4, 1)
         self.panelType = FLPOnline
-        return
 
     def load(self):
         if self.isLoaded == 1:
@@ -144,9 +138,10 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
         gui = loader.loadModel('phase_3.5/models/gui/friendslist_gui')
         auxGui = loader.loadModel('phase_3.5/models/gui/avatar_panel_gui')
         self.title = DirectLabel(parent=self, relief=None, text='', text_scale=TTLocalizer.FLPtitle, text_fg=(0, 0.1, 0.4, 1), pos=(0.007, 0.0, 0.2))
-        background_image = gui.find('**/FriendsBox_Open')
-        self['image'] = background_image
-        self.setPos(1.1, 0, 0.54)
+        backgroundImage = gui.find('**/FriendsBox_Open')
+        self['image'] = backgroundImage
+        self.reparentTo(base.a2dTopRight)
+        self.setPos(-0.233, 0, -0.46)
         self.scrollList = DirectScrolledList(parent=self, relief=None, incButton_image=(gui.find('**/FndsLst_ScrollUp'),
          gui.find('**/FndsLst_ScrollDN'),
          gui.find('**/FndsLst_ScrollUp_Rllvr'),
@@ -174,7 +169,6 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
          ''), text_scale=TTLocalizer.FLPsecrets, text_fg=(0, 0, 0, 1), text_bg=(1, 1, 1, 1), text_pos=(-0.04, -0.085), textMayChange=0, command=self.__secrets)
         gui.removeNode()
         auxGui.removeNode()
-        return
 
     def unload(self):
         if self.isLoaded == 0:
@@ -188,7 +182,6 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
         del self.right
         del self.friends
         DirectFrame.destroy(self)
-        return None
 
     def makeFriendButton(self, friendTuple, colorChoice = None, bold = 0):
         playerName = None
@@ -329,7 +322,6 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
     def __newFriend(self):
         messenger.send('wakeup')
         messenger.send('friendAvatar', [None, None, None])
-        return
 
     def __choseFriend(self, friendId, showType = 0):
         messenger.send('wakeup')
@@ -340,7 +332,6 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
         if handle != None:
             self.notify.info("Clicked on name in friend's list. doId = %s" % handle.doId)
             messenger.send('clickedNametag', [handle])
-        return
 
     def __chosePlayerFriend(self, friendId, showType = 1):
         messenger.send('wakeup')
@@ -353,7 +344,6 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
         if playerFriendInfo != None:
             self.notify.info("Clicked on name in player friend's list. Id = %s" % friendId)
             messenger.send('clickedNametagPlayer', [handle, friendId, showType])
-        return
 
     def __updateScrollList(self):
         newFriends = []
