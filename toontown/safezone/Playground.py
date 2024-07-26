@@ -22,7 +22,6 @@ from toontown.toonbase import TTLocalizer
 from toontown.toonbase.ToonBaseGlobal import base
 from toontown.toontowngui import TTDialog
 from toontown.trolley.Trolley import Trolley
-from toontown.tutorial.TutorialForceAcknowledge import TutorialForceAcknowledge
 
 
 class Playground(Place):

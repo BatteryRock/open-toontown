@@ -10,16 +10,10 @@ class TutorialForceAcknowledge:
         return
 
     def enter(self):
-        base.localAvatar.loop('neutral')
-        self.doneStatus = {'mode': 'incomplete'}
-        msg = TTLocalizer.TutorialForceAcknowledgeMessage
-        self.dialog = TTDialog.TTDialog(text=msg, command=self.handleOk, style=TTDialog.Acknowledge)
+        pass
 
     def exit(self):
-        if self.dialog:
-            self.dialog.cleanup()
-            self.dialog = None
-        return
+        pass
 
     def handleOk(self, value):
         messenger.send(self.doneEvent, [self.doneStatus])
